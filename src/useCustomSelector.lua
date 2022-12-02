@@ -1,24 +1,25 @@
+local Roact = require(script.Parent.Parent.Roact)
+
 local function defaultEqualityFn(newState, oldState)
 	return newState == oldState
 end
 
 local function useCustomSelector(
-	hooks,
 	selector: (state: table) -> any,
 	equalityFn: ((newState: table, oldState: table) -> boolean)?,
 	context
 )
-	local store = hooks.useContext(context)
-	local mappedState, setMappedState = hooks.useState(function()
+	local store = Roact.useContext(context)
+	local mappedState, setMappedState = Roact.useState(function()
 		return selector(store:getState())
 	end)
-	local oldMappedState = hooks.useValue(mappedState)
+	local oldMappedState = Roact.useRef(mappedState)
 
 	if equalityFn == nil then
 		equalityFn = defaultEqualityFn
 	end
 
-	hooks.useEffect(function()
+	Roact.useEffect(function()
 		local storeChanged = store.changed:connect(function(newState, _oldState)
 			local newMappedState = selector(newState)
 
