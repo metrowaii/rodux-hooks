@@ -2,3 +2,4 @@ Packages
 ServerPackages
 roblox.toml
 *.rbxm
+sourcemap.json
