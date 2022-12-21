@@ -4,11 +4,7 @@ local function defaultEqualityFn(newState, oldState)
 	return newState == oldState
 end
 
-local function useCustomSelector(
-	selector: (state: table) -> any,
-	equalityFn: ((newState: table, oldState: table) -> boolean)?,
-	context
-)
+local function useCustomSelector<R, S>(selector: (S) -> R, equalityFn: ((S, S) -> boolean)?, context): R
 	local store = Roact.useContext(context)
 	local mappedState, setMappedState = Roact.useState(function()
 		return selector(store:getState())
@@ -18,6 +14,7 @@ local function useCustomSelector(
 	if equalityFn == nil then
 		equalityFn = defaultEqualityFn
 	end
+	assert(equalityFn, "should exist")
 
 	Roact.useEffect(function()
 		local storeChanged = store.changed:connect(function(newState, _oldState)
