@@ -1,0 +1,15 @@
+{
+	"name": "rodux-hooks",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$path": "Packages",
+				"rodux-hooks": {
+					"$path": "src"
+				}
+			}
+		}
+	}
+}
